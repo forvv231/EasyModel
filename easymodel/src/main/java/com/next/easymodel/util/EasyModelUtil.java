@@ -13,47 +13,33 @@ import static com.next.easymodel.config.Constant.nickItems;
 
 public class EasyModelUtil {
 
-    private static int limit = 10;
+    private static int limit = 20;
 
     public static List<MomentModel> getMomentList() {
-        Random rand = new Random();
-        int index = rand.nextInt(limit);
+        return getMomentList(1, limit, 10000);
+    }
 
-        List<MomentModel> momentModelList = new ArrayList<>();
-        for (int i = 0; i < limit; i++) {
-            MomentModel momentModel = new MomentModel();
-            momentModel.setNick(nickItems[rand.nextInt(nickItems.length)]);
-            momentModel.setAvator(avatorItems[rand.nextInt(avatorItems.length)]);
-            momentModel.setTime("3天前");
-            momentModel.setContent(contentItems[(index++) % (contentItems.length)]);
-            momentModel.setLikeCount(rand.nextInt(1000) + "");
-            momentModel.setCommentCount(rand.nextInt(1000) + "");
-            momentModel.setShareCount(rand.nextInt(1000) + "");
-            List<String> photoList = new ArrayList<>();
-            int count = rand.nextInt(9);
-            for (int j = 0; j < count; j++) {
-                photoList.add(avatorItems[rand.nextInt(avatorItems.length)]);
-            }
-            momentModel.setPhotos(photoList);
-            momentModelList.add(momentModel);
-        }
-        return momentModelList;
+    public static List<MomentModel> getMomentList(int page) {
+        return getMomentList(page, limit, 10000);
+    }
+
+    public static List<MomentModel> getMomentList(int page, int limit) {
+        return getMomentList(page, limit, 10000);
     }
 
     public static List<MomentModel> getMomentList(int page, int limit, int maxpage) {
         Random rand = new Random();
-        int index = rand.nextInt(limit);
 
         List<MomentModel> momentModelList = new ArrayList<>();
         for (int i = 0; i < limit; i++) {
-            if (i == maxpage) {
-                break;
+            if (page == maxpage) {
+               break;
             }
             MomentModel momentModel = new MomentModel();
-            momentModel.setNick(nickItems[rand.nextInt(nickItems.length)]);
-            momentModel.setAvator(avatorItems[rand.nextInt(avatorItems.length)]);
+            momentModel.setNick(nickItems[(page++) % (contentItems.length)]);
+            momentModel.setAvator(avatorItems[(page++) % (contentItems.length)]);
             momentModel.setTime("3天前");
-            momentModel.setContent(contentItems[(index++) % (contentItems.length)]);
+            momentModel.setContent(contentItems[(page++) % (contentItems.length)]);
             momentModel.setLikeCount(rand.nextInt(1000) + "");
             momentModel.setCommentCount(rand.nextInt(1000) + "");
             momentModel.setShareCount(rand.nextInt(1000) + "");
@@ -69,31 +55,13 @@ public class EasyModelUtil {
     }
 
 
-    public static List<MomentModel> getBannerList(int page, int limit, int maxpage) {
+    public static List<String> getBannerList(int limit) {
         Random rand = new Random();
-        int index = rand.nextInt(limit);
 
-        List<MomentModel> momentModelList = new ArrayList<>();
+        List<String> bannerList = new ArrayList<>();
         for (int i = 0; i < limit; i++) {
-            if (i == maxpage) {
-                break;
-            }
-            MomentModel momentModel = new MomentModel();
-            momentModel.setNick(nickItems[rand.nextInt(nickItems.length)]);
-            momentModel.setAvator(avatorItems[rand.nextInt(avatorItems.length)]);
-            momentModel.setTime("3天前");
-            momentModel.setContent(contentItems[(index++) % (contentItems.length)]);
-            momentModel.setLikeCount(rand.nextInt(1000) + "");
-            momentModel.setCommentCount(rand.nextInt(1000) + "");
-            momentModel.setShareCount(rand.nextInt(1000) + "");
-            List<String> photoList = new ArrayList<>();
-            int count = rand.nextInt(9);
-            for (int j = 0; j < count; j++) {
-                photoList.add(avatorItems[rand.nextInt(avatorItems.length)]);
-            }
-            momentModel.setPhotos(photoList);
-            momentModelList.add(momentModel);
+            bannerList.add(avatorItems[rand.nextInt(avatorItems.length)]);
         }
-        return momentModelList;
+        return bannerList;
     }
 }

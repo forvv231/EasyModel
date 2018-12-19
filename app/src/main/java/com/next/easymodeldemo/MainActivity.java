@@ -1,24 +1,14 @@
 package com.next.easymodeldemo;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.next.easymodeldemo.ui.IndexFragment;
+import com.next.easymodeldemo.ui.MomentFragment;
 import com.next.easynavigation.constant.Anim;
-import com.next.easynavigation.utils.NavigationUtil;
 import com.next.easynavigation.view.EasyNavigationBar;
 
 import java.util.ArrayList;
@@ -52,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
         navigationBar = findViewById(R.id.navigationBar);
 
         fragments.add(new IndexFragment());
-        fragments.add(new IndexFragment());
-        fragments.add(new IndexFragment());
-        fragments.add(new IndexFragment());
+        fragments.add(new MomentFragment());
+        fragments.add(new MomentFragment());
+        fragments.add(new MomentFragment());
 
         navigationBar.titleItems(tabText)
                 .normalIconItems(normalIcon)

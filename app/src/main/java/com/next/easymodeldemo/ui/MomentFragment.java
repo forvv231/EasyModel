@@ -7,33 +7,39 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.next.easymodel.model.MomentModel;
 import com.next.easymodel.util.EasyModelUtil;
 import com.next.easymodeldemo.R;
 import com.next.easymodeldemo.adapter.MomentsAdapter;
 import com.next.easymodeldemo.config.Instance;
 import com.orhanobut.logger.Logger;
-import com.youth.banner.Banner;
-import com.youth.banner.transformer.ZoomOutSlideTransformer;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class IndexFragment extends Fragment {
+public class MomentFragment extends Fragment {
 
     @BindView(R.id.mRecyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
 
     private MomentsAdapter mAdapter;
     private int page = 1;
-    private Banner mBanner;
+    private int maxpage = 3;
+    private int limit = 5;
 
     @Nullable
     @Override
@@ -48,23 +54,17 @@ public class IndexFragment extends Fragment {
     }
 
     private void initData() {
+
+        Logger.json(Instance.gson.toJson(EasyModelUtil.getMomentList(5, 5, 5)));
+
         mAdapter = new MomentsAdapter(getActivity());
 
-        Logger.json(Instance.gson.toJson(EasyModelUtil.getMomentList()));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        View headView = LayoutInflater.from(getActivity()).inflate(R.layout.index_header,null);
-        mBanner = headView.findViewById(R.id.mBanner);
-        mBanner.setImages(EasyModelUtil.getBannerList(5));
-        mBanner.setBannerAnimation(ZoomOutSlideTransformer.class);
-        mBanner.setDelayTime(4000);
-        mBanner.start();
-        mAdapter.addHeaderView(headView);
-        mAdapter.setNewData(EasyModelUtil.getMomentList());
-        mAdapter.setUpFetchListener(new BaseQuickAdapter.UpFetchListener() {
+        mAdapter.setNewData(EasyModelUtil.getMomentList(page, limit, maxpage));
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onUpFetch() {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refresh();
             }
         });
@@ -76,21 +76,22 @@ public class IndexFragment extends Fragment {
                     public void run() {
                         loadMore();
                     }
-                },2000);
+                }, 2000);
             }
         }, mRecyclerView);
     }
 
     private void loadMore() {
-        boolean isRefresh =page ==1;
-        setData(isRefresh, EasyModelUtil.getMomentList());
+        boolean isRefresh = false;
+        setData(isRefresh, EasyModelUtil.getMomentList(page, limit, maxpage));
     }
 
     private void refresh() {
         page = 1;
         mAdapter.setEnableLoadMore(false);//这里的作用是防止下拉刷新的时候还可以上拉加载
-        setData(true, EasyModelUtil.getMomentList());
+        setData(true, EasyModelUtil.getMomentList(page, limit, maxpage));
         mAdapter.setEnableLoadMore(true);
+        refreshLayout.finishRefresh();
         //mSwipeRefreshLayout.setRefreshing(false);
     }
 
@@ -104,7 +105,7 @@ public class IndexFragment extends Fragment {
                 mAdapter.addData(data);
             }
         }
-        if (size < 10) {
+        if (size < limit) {
             //第一页如果不够一页就不显示没有更多数据布局
             mAdapter.loadMoreEnd(isRefresh);
             Toast.makeText(getActivity(), "no more data", Toast.LENGTH_SHORT).show();
