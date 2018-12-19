@@ -6,6 +6,6 @@
     <com.youth.banner.Banner
         android:id="@+id/mBanner"
         android:layout_width="match_parent"
-        android:layout_height="220dp"></com.youth.banner.Banner>
+        android:layout_height="180dp"></com.youth.banner.Banner>
 
 </android.support.constraint.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.next.easymodeldemo.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.next.easymodel.model.MomentModel;
 import com.next.easymodel.util.EasyModelUtil;
+import com.next.easymodel.util.EasyUtil;
 import com.next.easymodeldemo.R;
 import com.next.easymodeldemo.adapter.MomentsAdapter;
 import com.next.easymodeldemo.config.Instance;
@@ -23,6 +25,7 @@ import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.List;
 
@@ -61,6 +64,13 @@ public class MomentFragment extends Fragment {
 
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.addItemDecoration(
+                new HorizontalDividerItemDecoration.Builder(getContext())
+                        .color(Color.parseColor("#f5f5f5"))
+                        .size(EasyUtil.dip2px(getContext(),10))
+                        .margin(15)
+                        .build());
+
         mAdapter.setNewData(EasyModelUtil.getMomentList(page, limit, maxpage));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -108,7 +118,6 @@ public class MomentFragment extends Fragment {
         if (size < limit) {
             //第一页如果不够一页就不显示没有更多数据布局
             mAdapter.loadMoreEnd(isRefresh);
-            Toast.makeText(getActivity(), "no more data", Toast.LENGTH_SHORT).show();
         } else {
             mAdapter.loadMoreComplete();
         }

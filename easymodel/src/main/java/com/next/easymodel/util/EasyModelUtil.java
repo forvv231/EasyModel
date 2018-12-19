@@ -36,10 +36,10 @@ public class EasyModelUtil {
                break;
             }
             MomentModel momentModel = new MomentModel();
-            momentModel.setNick(nickItems[(page++) % (contentItems.length)]);
-            momentModel.setAvator(avatorItems[(page++) % (contentItems.length)]);
+            momentModel.setNick(nickItems[(i) % (nickItems.length)]);
+            momentModel.setAvator(avatorItems[(i) % (avatorItems.length)]);
             momentModel.setTime("3天前");
-            momentModel.setContent(contentItems[(page++) % (contentItems.length)]);
+            momentModel.setContent(contentItems[(i) % (contentItems.length)]);
             momentModel.setLikeCount(rand.nextInt(1000) + "");
             momentModel.setCommentCount(rand.nextInt(1000) + "");
             momentModel.setShareCount(rand.nextInt(1000) + "");
@@ -58,9 +58,11 @@ public class EasyModelUtil {
     public static List<String> getBannerList(int limit) {
         Random rand = new Random();
 
+        int index = rand.nextInt(avatorItems.length);
+
         List<String> bannerList = new ArrayList<>();
         for (int i = 0; i < limit; i++) {
-            bannerList.add(avatorItems[rand.nextInt(avatorItems.length)]);
+            bannerList.add(avatorItems[(index+i)%(avatorItems.length)]);
         }
         return bannerList;
     }

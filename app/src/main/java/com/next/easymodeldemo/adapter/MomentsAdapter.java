@@ -44,7 +44,7 @@ public class MomentsAdapter extends BaseQuickAdapter<MomentModel, BaseViewHolder
 
         ViewGroup photoViewGroup = holder.getView(R.id.viewgroup_image_ll);
 
-        Glide.with(mContext).load(R.mipmap.ic_launcher).into((ImageView) holder.getView(R.id.item_head));
+        Glide.with(mContext).load(item.getAvator()).into((ImageView) holder.getView(R.id.item_head));
         holder.setText(R.id.item_nick, item.getNick());
         holder.setText(R.id.item_date, item.getTime());
         holder.setText(R.id.expand_text_view, item.getContent());
@@ -86,7 +86,7 @@ public class MomentsAdapter extends BaseQuickAdapter<MomentModel, BaseViewHolder
                 for (int j = 0; j < column; j++) {
                     final ImageView imageview = new ImageView(mContext);
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                    params.width = (int) ((EasyUtil.getScreenWidth(mContext) - EasyUtil.dip2px(mContext, padding * 2) - 15 * 2) / 3);
+                    params.width = (int) ((EasyUtil.getScreenWidth(mContext) - EasyUtil.dip2px(mContext, (padding+15) * 2)) / 3);
                     params.height = params.width;
                     if (j != 3)
                         params.rightMargin = EasyUtil.dip2px(mContext, padding);

@@ -1,5 +1,6 @@
 package com.next.easymodeldemo.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -10,15 +11,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.next.easymodel.util.EasyModelUtil;
 import com.next.easymodeldemo.R;
 import com.next.easymodeldemo.adapter.MomentsAdapter;
+import com.next.easymodeldemo.base.BaseApplication;
 import com.next.easymodeldemo.config.Instance;
 import com.orhanobut.logger.Logger;
 import com.youth.banner.Banner;
+import com.youth.banner.loader.ImageLoader;
 import com.youth.banner.transformer.ZoomOutSlideTransformer;
 
 import java.util.List;
@@ -54,8 +59,9 @@ public class IndexFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        View headView = LayoutInflater.from(getActivity()).inflate(R.layout.index_header,null);
+        View headView = LayoutInflater.from(getActivity()).inflate(R.layout.index_header, null);
         mBanner = headView.findViewById(R.id.mBanner);
+        mBanner.setImageLoader(new com.next.easymodeldemo.config.ImageLoader.GlideImageLoader());
         mBanner.setImages(EasyModelUtil.getBannerList(5));
         mBanner.setBannerAnimation(ZoomOutSlideTransformer.class);
         mBanner.setDelayTime(4000);
@@ -76,13 +82,13 @@ public class IndexFragment extends Fragment {
                     public void run() {
                         loadMore();
                     }
-                },2000);
+                }, 2000);
             }
         }, mRecyclerView);
     }
 
     private void loadMore() {
-        boolean isRefresh =page ==1;
+        boolean isRefresh = page == 1;
         setData(isRefresh, EasyModelUtil.getMomentList());
     }
 
@@ -112,4 +118,5 @@ public class IndexFragment extends Fragment {
             mAdapter.loadMoreComplete();
         }
     }
+
 }
