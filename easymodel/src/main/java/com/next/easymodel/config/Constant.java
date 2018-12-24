@@ -6,7 +6,13 @@ public class Constant {
     public static String[] nickItems = {
             "听、海哭的声音",
             "角落",
-            "晴天"
+            "晴天",
+            "Seven",
+            "Next",
+            "NOTHING",
+            "Damon",
+            "若",
+            "爱随风",
     };
 
     //头像

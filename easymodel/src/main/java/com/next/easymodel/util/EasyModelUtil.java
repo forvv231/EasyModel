@@ -29,6 +29,7 @@ public class EasyModelUtil {
 
     public static List<MomentModel> getMomentList(int page, int limit, int maxpage) {
         Random rand = new Random();
+        int photonum = rand.nextInt(100);
 
         List<MomentModel> momentModelList = new ArrayList<>();
         for (int i = 0; i < limit; i++) {
@@ -46,7 +47,7 @@ public class EasyModelUtil {
             List<String> photoList = new ArrayList<>();
             int count = rand.nextInt(9);
             for (int j = 0; j < count; j++) {
-                photoList.add(avatorItems[rand.nextInt(avatorItems.length)]);
+                photoList.add(avatorItems[(photonum++) % (avatorItems.length)]);
             }
             momentModel.setPhotos(photoList);
             momentModelList.add(momentModel);
@@ -55,7 +56,7 @@ public class EasyModelUtil {
     }
 
 
-    public static List<String> getBannerList(int limit) {
+    public static List<String> getImageList(int limit) {
         Random rand = new Random();
 
         int index = rand.nextInt(avatorItems.length);

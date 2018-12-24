@@ -62,7 +62,7 @@ public class IndexFragment extends Fragment {
         View headView = LayoutInflater.from(getActivity()).inflate(R.layout.index_header, null);
         mBanner = headView.findViewById(R.id.mBanner);
         mBanner.setImageLoader(new com.next.easymodeldemo.config.ImageLoader.GlideImageLoader());
-        mBanner.setImages(EasyModelUtil.getBannerList(5));
+        mBanner.setImages(EasyModelUtil.getImageList(5));
         mBanner.setBannerAnimation(ZoomOutSlideTransformer.class);
         mBanner.setDelayTime(4000);
         mBanner.start();
